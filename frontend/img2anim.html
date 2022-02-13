@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="gifSearch">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>FaceSwap - Stay Different! - Gifs and Videos</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/loading.css" rel="stylesheet">
+  <link href="assets/css/gif.css" rel="stylesheet">
+
+</head>
+
+<body ng-controller="GifSearchController">
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <h1><a href="/">FaceSwap</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="img2img">Images</a></li>
+          <li><a class="active " href="img2anim">Gifs and Videos</a></li>
+          <li><a href="about">About</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Features Section ======= -->
+
+    <section class="hero-section inner-page">
+      <div class="wave">
+
+        <svg width="1920px" height="265px" viewBox="0 0 1920 265" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Apple-TV" transform="translate(0.000000, -402.000000)" fill="#FFFFFF">
+              <path
+                d="M0,439.134243 C175.04074,464.89273 327.944386,477.771974 458.710937,477.771974 C654.860765,477.771974 870.645295,442.632362 1205.9828,410.192501 C1429.54114,388.565926 1667.54687,411.092417 1920,477.771974 L1920,667 L1017.15166,667 L0,667 L0,439.134243 Z"
+                id="Path"></path>
+            </g>
+          </g>
+        </svg>
+
+      </div>
+
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-12">
+            <div class="row justify-content-center">
+              <div class="col-md-7 text-center hero-text">
+                <h1 data-aos="fade-up" data-aos-delay="">Face Swap Gifs</h1>
+                <p class="mb-5" data-aos="fade-up" data-aos-delay="100">Transefer face identity from a still image to
+                  Gif.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <div data-aos="fade-up" data-aos-delay="100" class="container col-lg">
+      <div class="row">
+        <div id="col_1" class="col-lg">
+          <label for="formFile_src" class="form-label">Source Image</label>
+          <input class="form-control" type="file" id="formFile_src" accept="image/png, image/jpeg, image/webp"
+            onchange="preview('source')">
+          <!-- <img id="frame_source" src="" class="img-fluid" /> -->
+        </div>
+      </div>
+    
+      <label for="gif-search" class="sr-only">Destination Image</label>
+        <form class="input-group" id="gif-search" ng-submit="changeGif()">
+          
+          <input type="text" id="gif-search" class="form-control" ng-model="name" required
+          placeholder="Enter your search string and press Enter ...">
+          <span class="input-group-btn">
+            <button id ="go" class="btn btn-secondary" type="submit">Go!</button>
+          </span>
+        </form>
+        
+        <ul id="gif-list" style="margin:5% 0 5% 0;">
+          <li ng-repeat="gif in gifs" data-aos="fade-up">
+            <img style="display:none;" data-aos="fade-up" onclick="img_click(event)" class="gif-image"
+              src="{{gif.images.fixed_height.url}}" />
+            <!-- <span ng-if='gif.username'>{{gif.username}}</span> -->
+          </li>
+        </ul>
+
+        <div class="row" data-aos="fade-up">
+          <button id="show-more" ng-click="moreGif()" data-aos="fade-up" type="button" style="display: none;" class="btn btn-primary"><i class="bi bi-arrow-down-circle-fill"></i></button>
+        </div>
+      
+        <div id="dest_div" class="container"></div>
+
+    </div>
+
+
+    <div id="result_container" class="container">
+      <div id="loader" class="mosaic-loader img-fluid rounded mx-auto" style="margin: 5% auto 5% auto; display: none;">
+        <div class="cell d-0"></div>
+        <div class="cell d-1"></div>
+        <div class="cell d-2"></div>
+        <div class="cell d-3"></div>
+        <div class="cell d-1"></div>
+        <div class="cell d-2"></div>
+        <div class="cell d-3"></div>
+        <div class="cell d-4"></div>
+        <div class="cell d-2"></div>
+        <div class="cell d-3"></div>
+        <div class="cell d-4"></div>
+        <div class="cell d-5"></div>
+        <div class="cell d-3"></div>
+        <div class="cell d-4"></div>
+        <div class="cell d-5"></div>
+        <div class="cell d-6"></div>
+      </div>
+    </div>
+
+    <div id="myModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="modal-title" lass="modal-title">Something Went Wrong :(</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="modal-text">Make sure that you entered valid image URLs and try again.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer class="footer" role="contentinfo">
+    <div class="container" style="width:80%;">
+      <div class="row align-items-center">
+        <div class="col" data-aos="fade-right">
+          <h3>About FaceSwap</h3>
+          <p>Personalized reaction GIFs have never been easier. FaceSwap will help you impress your friends and stand
+            out from the rest.</p>
+          <!-- <p class="social">
+            <a href="#"><span class="bi bi-twitter"></span></a>
+            <a href="#"><span class="bi bi-facebook"></span></a>
+            <a href="#"><span class="bi bi-instagram"></span></a>
+            <a href="#"><span class="bi bi-linkedin"></span></a>
+          </p> -->
+        </div>
+        <div class="col" data-aos="fade-left">
+          <h3>Navigation</h3>
+          <ul class="list-unstyled">
+            <li><a href="/">Home</a></li>
+            <li><a href="/img2img">Images</a></li>
+            <li><a href="/img2anim">Gifs</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+        </div>
+      </div>
+
+
+      <div class="row justify-content-center text-center">
+        <div class="col-md-7">
+          <p class="copyright">&copy; 2022 FaceSwap. All Rights Reserved</p>
+          <div class="credits">
+            <a href="https://github.com/trpakov">Todor Pakov</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/jquery/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"
+    integrity="sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Main JS Files -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/gif.js"></script>
+  <script src="assets/js/img2anim.js"></script>
+
+</body>
+
+</html>
