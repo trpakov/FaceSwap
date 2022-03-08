@@ -133,7 +133,7 @@ async function testImages(click) {
     src_valid = undefined;
     dest_valid = undefined;
 
-    $('#frame_source_url').hide()
+    $('#frame_source_url').hide();
     $('#loader_src').show();
 
     const srcTask = testImage(photo_src_url).then(
@@ -145,7 +145,7 @@ async function testImages(click) {
             $('#frame_source_url').hide(500, function() {$(this).remove()});
          });
 
-    $('#frame_dest_url').hide()
+    $('#frame_dest_url').hide();
     $('#loader_dest').show();
 
     const destTask = testImage(photo_dest_url).then(

@@ -3,7 +3,7 @@ import glob
 import os
 import os.path as osp
 import cv2
-from insightface.model_zoo import model_zoo
+from backend.insightface.model_zoo import model_zoo
 from backend.insightface_func.utils import face_align
 
 class Face_Detector:

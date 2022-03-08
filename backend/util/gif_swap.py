@@ -49,7 +49,7 @@ def gif_swap(anim, latent_id, swapper, ext, mode):
         image_filenames = sorted(glob.glob(path))
 
         durations = np.array(durations) / 10
-        command = 'magick convert'
+        command = 'convert'
 
         for image_filename, duration in zip(image_filenames, durations):
             command += f' -delay {duration} {image_filename}'

@@ -152,8 +152,3 @@ cython_debug/
 #.idea/
 
 .vscode
-results
-cache
-arcface_model
-checkpoint*/
-antelope
