@@ -10,3 +10,5 @@ unzip -j /code/backend/insightface_func/models/antelope/antelope.zip -d /code/ba
 rm /code/backend/insightface_func/models/antelope/antelope.zip
 
 gdown -O /code/backend/parsing_model/checkpoint/ https://drive.google.com/u/1/uc?id=1_UjidpSizppDHuLfr9WhaiVzeDdayBuV
+
+gdown -O /code/backend/parsing_model/checkpoint/ https://download.pytorch.org/models/resnet18-5c106cde.pth

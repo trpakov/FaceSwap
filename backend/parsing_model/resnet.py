@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.model_zoo as modelzoo
+from os import environ
 
 # from modules.bn import InPlaceABNSync as BatchNorm2d
 
@@ -77,7 +78,7 @@ class Resnet18(nn.Module):
         return feat8, feat16, feat32
 
     def init_weight(self):
-        state_dict = modelzoo.load_url(resnet18_url)
+        state_dict = modelzoo.load_url(resnet18_url, model_dir='/code/backend/parsing_model/checkpoint' if environ.get('AM_I_IN_A_DOCKER_CONTAINER', False) else None)
         self_state_dict = self.state_dict()
         for k, v in state_dict.items():
             if 'fc' in k: continue

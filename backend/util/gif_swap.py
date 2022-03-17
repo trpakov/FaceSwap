@@ -56,7 +56,7 @@ def gif_swap(anim, latent_id, swapper, ext, mode):
 
         id = uuid.uuid4().hex
         command += f' -layers Optimize backend/results/{id}.{ext}' if ext != 'png' else f' -layers Optimize APNG:backend/results/{id}.{ext}'
-        call(command)
+        call(command, shell=True)
     
     # with open(f'backend/results/{id}.{ext}', 'rb') as f:
     #     result = f.read()
