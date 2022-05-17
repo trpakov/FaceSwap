@@ -3,12 +3,14 @@ import os
 import time
 from urllib.parse import urlparse
 from fastapi import FastAPI, UploadFile, Response, Request
-from fastapi.responses import FileResponse, PlainTextResponse
+from fastapi.responses import FileResponse, PlainTextResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 import warnings; warnings.filterwarnings("ignore")
 from backend.swapper import Swapper
 import requests
 from glob import glob
+import aiohttp
+GIPHY_API_KEY = 'TsGk4CCWHoRCoQxj1KqDUwzvw7xdSvtY'
 
 app = FastAPI()
 
@@ -18,7 +20,7 @@ app.mount("/assets", StaticFiles(directory="frontend/assets"), name="assets")
 @app.on_event("startup")
 async def init():
     global swapper
-    swapper = Swapper()
+    swapper = Swapper(use_cache=False)
 
 @app.on_event("shutdown")
 async def shutdown():
@@ -28,15 +30,12 @@ async def shutdown():
 async def root():
     return FileResponse('frontend/index.html')
 
+
 @app.get("/img2img")
 async def img2img():
 
     return FileResponse('frontend/img2img.html')
 
-@app.get("/test")
-async def test():
-
-    return FileResponse('frontend/test.html')
 
 @app.get("/img2anim")
 async def img2anim():
@@ -118,6 +117,16 @@ def swap_video(source: UploadFile, dest: UploadFile):
 
     # return Response(result_img, media_type=f"image/{ext}")
     return PlainTextResponse(result_img)
+
+
+@app.get("/gif_search")
+async def get_img(q: str, offset: int):
+    
+    params = {'q': q, 'offset': offset, 'api_key': GIPHY_API_KEY, 'limit': 30}
+    async with aiohttp.request('GET', 'https://api.giphy.com/v1/gifs/search', params=params) as response:
+        if response.status != 200: raise HTTPException(status_code=404)   
+        data = await response.json()
+        return JSONResponse(data)
 
 
 @app.get("/{id}")

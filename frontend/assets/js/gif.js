@@ -17,7 +17,7 @@ gifSearch.controller('GifSearchController', function GifSearchController($scope,
         }
 
         console.log($scope.gif_name)
-        var url = 'https://api.giphy.com/v1/gifs/search?q=' + $scope.gif_name + '&offset=0' + '&api_key=dc6zaTOxFJmzC' + '&limit=28';
+        var url = '/gif_search?q=' + $scope.gif_name + '&offset=0';
 
         $http({
             method: 'GET',
@@ -54,7 +54,7 @@ gifSearch.controller('GifSearchController', function GifSearchController($scope,
 
     $scope.moreGif = function() {
 
-        var url = 'https://api.giphy.com/v1/gifs/search?q=' + $scope.gif_name + '&offset=' + $scope.offset * 28 + '&api_key=dc6zaTOxFJmzC' + '&limit=28';
+        var url = '/gif_search?q=' + $scope.gif_name + '&offset=' + $scope.offset * 30;
 
         $http({
             method: 'GET',
