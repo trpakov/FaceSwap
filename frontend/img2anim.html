@@ -114,7 +114,7 @@
         </form>
         
         <ul id="gif-list" style="margin:5% 0 5% 0;">
-          <li ng-repeat="gif in gifs" data-aos="fade-up">
+          <li class="gif-list-entry" ng-repeat="gif in gifs" data-aos="fade-up">
             <img style="display:none;" data-aos="fade-up" onclick="img_click(event)" class="gif-image"
               src="{{gif.images.fixed_height.url}}" />
             <!-- <span ng-if='gif.username'>{{gif.username}}</span> -->

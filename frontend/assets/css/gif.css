@@ -1,9 +1,9 @@
-ul {
+ul#gif-list {
     list-style:none;
     box-sizing: content-box;
   }
   
-  li {
+  li.gif-list-entry {
     display:inline-block;
     margin:2px;
     position:relative;
