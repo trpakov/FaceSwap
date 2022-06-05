@@ -48,15 +48,19 @@ def gif_swap(anim, latent_id, swapper, ext, mode):
         path = os.path.join(temp, '*.png')
         image_filenames = sorted(glob.glob(path))
 
-        durations = np.array(durations) / 10
-        command = 'convert'
-
-        for image_filename, duration in zip(image_filenames, durations):
-            command += f' -delay {duration} {image_filename}'
-
+        durations = np.array(durations) / 10    
         id = uuid.uuid4().hex
-        command += f' -layers Optimize backend/results/{id}.{ext}' if ext != 'png' else f' -layers Optimize APNG:backend/results/{id}.{ext}'
-        call(command, shell=True)
+
+        with open(im_file:='backend/cache/im_file', mode='w') as f:
+
+            f.writelines([f'( -delay {duration} {image_filename} )\n' for image_filename, duration in zip(image_filenames, durations)])
+            f.write('-layers Optimize\n')
+            f.seek(0)
+            command = f'convert @{im_file}'
+            command += f' backend/results/{id}.{ext}' if ext != 'png' else f' APNG:backend/results/{id}.{ext}'
+            call(command, shell=True)
+
+        os.remove(im_file)
     
     # with open(f'backend/results/{id}.{ext}', 'rb') as f:
     #     result = f.read()
