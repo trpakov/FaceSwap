@@ -121,7 +121,7 @@ switcher.onclick = function () {
     $('#img-upload').toggle(500);
     $('#img-url').toggle(500, function() {
         if ($(this).css('display') != 'none') {
-            testImages(click=false);
+            // testImages(click=false);
         }
     })
 }
