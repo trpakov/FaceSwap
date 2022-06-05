@@ -33,13 +33,17 @@ async def root():
 
 @app.get("/img2img")
 async def img2img():
-
     return FileResponse('frontend/img2img.html')
 
 
 @app.get("/img2anim")
 async def img2anim():
     return FileResponse('frontend/img2anim.html')
+
+
+@app.get("/about")
+async def img2anim():
+    return FileResponse('frontend/about.html')
 
 
 @app.post("/swap", tags=['swapping'], response_class=Response, description='Transefer face identity between two still images')
